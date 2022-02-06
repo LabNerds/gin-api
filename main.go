@@ -7,7 +7,6 @@ import (
 
 	"gin-api/config"
 	"gin-api/db"
-	"gin-api/models"
 	"gin-api/server"
 )
 
@@ -20,7 +19,9 @@ func main() {
 	flag.Parse()
 
 	config.Init(*environment)
-	db.Init()
-	models.Init()
+
+	defer db.CloseDBConnection()
+	db.Connect()
+
 	server.Init()
 }

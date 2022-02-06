@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"gin-api/config"
+	"gin-api/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -11,7 +12,7 @@ import (
 var db *gorm.DB
 var err error
 
-func Init() {
+func Connect() {
 	c := config.GetConfig()
 	db, err = gorm.Open(postgres.New(
 		postgres.Config{
@@ -28,9 +29,26 @@ func Init() {
 
 	if err == nil {
 		fmt.Println("DB connected")
+		setupDatabaseConection()
 	}
 }
 
+func setupDatabaseConection() {
+	db.AutoMigrate(&models.User{})
+}
+
 func GetDB() *gorm.DB {
+	if err != nil {
+		panic("Failed to get db driver")
+	}
+
 	return db
+}
+
+func CloseDBConnection() {
+	current_db, err := db.DB()
+	if err != nil {
+		panic("Failed to close connection from database")
+	}
+	current_db.Close()
 }
