@@ -1,17 +1,21 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"gin-api/src/utils"
+	"flag"
+	"fmt"
+	"os"
+
+	"gin-api/config"
+	"gin-api/server"
 )
 
 func main() {
-	router := gin.New()
-	router.Use(gin.LoggerWithFormatter(utils.LogFormatter))
-	router.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
-	router.Run(":8080")
+	environment := flag.String("e", "development", "")
+	flag.Usage = func() {
+		fmt.Println("Usage: server -e {mode}")
+		os.Exit(1)
+	}
+	flag.Parse()
+	config.Init(*environment)
+	server.Init()
 }
