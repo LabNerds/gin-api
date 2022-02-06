@@ -7,12 +7,9 @@ import (
 
 	"gin-api/config"
 	"gin-api/db"
+	"gin-api/models"
 	"gin-api/server"
 )
-
-type User struct {
-	Name string
-}
 
 func main() {
 	environment := flag.String("e", "development", "")
@@ -24,8 +21,6 @@ func main() {
 
 	config.Init(*environment)
 	db.Init()
-	database := db.GetDB()
-
-	database.Migrator().CreateTable(&User{})
+	models.Init()
 	server.Init()
 }
