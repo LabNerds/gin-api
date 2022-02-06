@@ -3,10 +3,12 @@ package db
 import (
 	"fmt"
 
-	"gin-api/config"
-	"gin-api/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+
+	"gin-api/config"
+
+	"gin-api/app/models"
 )
 
 var db *gorm.DB
