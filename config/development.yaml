@@ -1,2 +1,8 @@
 server:
   port: :8080
+db:
+  user: postgres
+  password: xxxx
+  dbname: gin_api
+  port: 5432
+  sllmode: false
