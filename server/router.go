@@ -10,9 +10,8 @@ import (
 
 func NewRouter() *gin.Engine {
 	router := gin.New()
-	router.Use(gin.LoggerWithFormatter(helpers.LogFormatter))
-	router.Use(gin.Recovery())
 
+	router.Use(useLogger(helpers.DefaultLoggerFormatter), gin.Recovery())
 	health := new(controllers.HealthController)
 
 	router.GET("/health", health.Status)
@@ -20,4 +19,9 @@ func NewRouter() *gin.Engine {
 	routers.V1(router)
 
 	return router
+}
+
+func useLogger(formatter func(params gin.LogFormatterParams) string) gin.HandlerFunc {
+	loggerConfig := helpers.NewLoggerConfig(formatter, []string{})
+	return gin.LoggerWithConfig(loggerConfig)
 }
