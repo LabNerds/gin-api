@@ -2,6 +2,7 @@ package server
 
 import (
 	"gin-api/app/controllers"
+	"gin-api/app/controllers/auth"
 	"gin-api/app/routers"
 	"gin-api/helpers"
 
@@ -16,6 +17,7 @@ func NewRouter() *gin.Engine {
 
 	router.GET("/health", health.Status)
 
+	router.POST("/login", auth.Login)
 	routers.V1(router)
 
 	return router

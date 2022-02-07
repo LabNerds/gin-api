@@ -14,5 +14,6 @@ func V1(router *gin.Engine) {
 			user := new(controllers.UserController)
 			userGroup.POST("/", user.CreateUser)
 		}
+
 	}
 }
