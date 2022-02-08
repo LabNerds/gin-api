@@ -21,7 +21,7 @@ func Login(c *gin.Context) {
 
 	db.GetDB().Find(&user, "name = ?", u.Name)
 
-  if user.Name != u.Name || user.Password != u.Password {
+  if user.Name != u.Name || !services.IsHashEqual(u.Password, user.Password) {
      c.JSON(http.StatusUnauthorized, "Please provide valid login details")
      return
   }

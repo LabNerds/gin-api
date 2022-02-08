@@ -18,6 +18,7 @@ func NewRouter() *gin.Engine {
 	router.GET("/health", health.Status)
 
 	router.POST("/login", auth.Login)
+	router.POST("/sign_up", auth.SignUp)
 	routers.V1(router)
 
 	return router
